@@ -39,7 +39,7 @@ const Sidebar = () => {
       <ul className="dashSideBarWrapper">
 
           <li>
-          <Link to="">
+          <Link to="/dashboard">
             <Button className="w-100">
               <span className="icon">
                 {" "}

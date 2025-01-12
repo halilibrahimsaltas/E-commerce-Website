@@ -6,12 +6,6 @@ const paymentSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  cardDetails: {
-    number: String,
-    name: String,
-    cardId: String
-  },
-  shippingAddress: String,
   status: {
     type: String,
     enum: ['PROCESSING', 'COMPLETED', 'FAILED'],
