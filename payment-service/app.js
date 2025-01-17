@@ -1,12 +1,8 @@
 // app.js
 const express = require('express');
-const dotenv = require('dotenv');
-const connectDB = require('./config/db');
-const paymentRoutes = require('./routes/paymentRoutes');
 const cors = require('cors');
-
-// Environment variables
-dotenv.config();
+const mongoose = require('mongoose');
+const paymentRoutes = require('./routes/paymentRoutes');
 
 const app = express();
 
@@ -14,30 +10,45 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// MongoDB bağlantısı
+mongoose.connect(process.env.CONNECTION_STRING, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}).then(() => {
+  console.log('MongoDB bağlantısı başarılı');
+}).catch((err) => {
+  console.error('MongoDB bağlantı hatası:', err);
+});
+
 // Routes
 app.use('/api/payments', paymentRoutes);
 
-// Health check
-app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'OK' });
+// Test endpoint
+app.get('/test', (req, res) => {
+  res.json({ message: 'Payment service is working' });
 });
 
-// Start server
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({
+    success: false,
+    message: 'Bir hata oluştu',
+    error: err.message
+  });
+});
+
 const PORT = process.env.PORT || 3001;
 
-const startServer = async () => {
-  try {
-    // MongoDB bağlantısı
-    await connectDB();
-    
-    // Server'ı başlat
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-  } catch (error) {
-    console.error('Server başlatma hatası:', error);
-    process.exit(1);
-  }
-};
+app.listen(PORT, () => {
+  console.log(`Payment service ${PORT} portunda çalışıyor`);
+});
 
-startServer();
+// Graceful shutdown
+process.on('SIGTERM', () => {
+  console.log('SIGTERM sinyali alındı, uygulama kapatılıyor...');
+  mongoose.connection.close(() => {
+    console.log('MongoDB bağlantısı kapatıldı');
+    process.exit(0);
+  });
+});
