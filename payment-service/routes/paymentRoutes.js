@@ -10,7 +10,7 @@ router.get('/test', (req, res) => {
 
 // Basit ödeme başlatma endpoint'i
 router.post('/initiate', async (req, res) => {
-  console.log('Ödeme isteği alındı:', req.body); // Debug log
+  console.log('Ödeme isteği alındı:', req.body);
 
   try {
     const { amount } = req.body;
@@ -24,13 +24,13 @@ router.post('/initiate', async (req, res) => {
 
     // Yeni ödeme oluştur
     const payment = new Payment({
-      amount: amount,
-      status: 'PROCESSING'
+      amount: Number(amount),
+      status: 'PROCESSING',
     });
 
     // Ödemeyi kaydet
     const savedPayment = await payment.save();
-    console.log('Ödeme kaydedildi:', savedPayment); // Debug log
+    console.log('Ödeme kaydedildi:', savedPayment);
 
     // 3 saniye sonra ödemeyi tamamla
     setTimeout(async () => {
@@ -38,13 +38,12 @@ router.post('/initiate', async (req, res) => {
         savedPayment.status = 'COMPLETED';
         savedPayment.completedAt = new Date();
         await savedPayment.save();
-        console.log('Ödeme tamamlandı:', savedPayment._id); // Debug log
+        console.log('Ödeme tamamlandı:', savedPayment._id);
       } catch (error) {
         console.error('Ödeme tamamlama hatası:', error);
       }
     }, 3000);
 
-    // Başarılı yanıt döndür
     res.status(200).json({
       success: true,
       paymentId: savedPayment._id,
@@ -52,7 +51,7 @@ router.post('/initiate', async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Ödeme hatası:', error); // Debug log
+    console.error('Ödeme hatası:', error);
     res.status(500).json({
       success: false,
       message: 'Ödeme işlemi sırasında bir hata oluştu',
