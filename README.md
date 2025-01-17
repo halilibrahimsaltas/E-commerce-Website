@@ -1,83 +1,132 @@
-# E-Commerce Website
+# E-Commerce Microservices Project
 
-This is a fully functional and responsive **E-Commerce Website** built with modern technologies such as React, Vite, MongoDB, and Kafka. The project includes features like user authentication, product CRUD operations, filtering, and dynamic product rendering. 
+A modern e-commerce platform built with a hybrid architecture - combining a monolithic core with strategic microservices. The project features a robust product management system, user authentication, payment processing, and real-time event handling using Kafka.
 
-## Table of Contents
-- [Features](#features)
-- [Technologies Used](#technologies-used)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Screenshots](#screenshots)
-- [Project Structure](#project-structure)
-- [Future Enhancements](#future-enhancements)
-- [Contributing](#contributing)
-- [License](#license)
+## Architecture Overview
 
----
-
-## Features
-- **User Authentication**: Login and registration functionality.
-- **CRUD Operations**: Manage products through Create, Read, Update, and Delete operations.
-- **Dynamic Filtering**: Filter products by category, price, and other criteria.
-- **Responsive Design**: Mobile-first approach ensuring compatibility across all devices.
-- **Stylish UI**: Enhanced with Bootstrap, Font Awesome, and styled-components.
-- **Real-Time Data Streaming**: Powered by Kafka for seamless data communication.
-- **State Management**: Utilizes React's `useState` and `useEffect` hooks for dynamic content.
-
----
+- **Monolithic Core**: Main application handling product management and user operations
+- **Payment Microservice**: Independent service for payment processing
+- **Event-Driven Communication**: Kafka for inter-service messaging
+- **Caching Layer**: Redis for session management and caching
+- **Database**: MongoDB for persistent storage
 
 ## Technologies Used
-### Frontend
-- **React** (v18.3.1): Library for building user interfaces.
-- **Vite**: Fast and optimized build tool.
-- **React Router DOM** (v7.0.2): Routing for React applications.
-- **Axios** (v1.7.9): HTTP client for API calls.
-- **React Slick**: Carousel component for dynamic content.
-- **Swiper**: Modern mobile-friendly slider.
-- **Styled Components** (v6.1.13): CSS-in-JS for styled elements.
 
-### Backend
-- **Node.js**: JavaScript runtime for server-side logic.
-- **MongoDB**: NoSQL database for data persistence.
-- **Kafka**: Event streaming platform for real-time data processing.
+### Core Technologies
 
-### Additional Tools
-- **Bootstrap** (v4.6.2): CSS framework for responsive design.
-- **Font Awesome** (v4.7.0): Icon toolkit for UI elements.
-- **js-cookie** (v3.0.5): Cookie handling for user sessions.
+- **Node.js & Express.js**: Backend framework
+- **React & Vite**: Frontend development
+- **MongoDB**: Primary database
+- **Redis**: Caching and session management
+- **Kafka**: Event streaming and inter-service communication
+- **Docker**: Containerization
 
----
+### Frontend Stack
 
-## Installation
+- React 18.3.1
+- Material-UI 6.2.0
+- React Router DOM 7.0.2
+- Bootstrap 4.6.2
+- Styled Components 6.1.13
+
+### Backend Stack
+
+- Express.js
+- Mongoose
+- KafkaJS
+- Redis Client
+- JWT Authentication
+
+## Key Features
+
+### Product Management
+
+- Product listing with dynamic filtering
+- Category management
+- Price filtering
+- Product search
+- Responsive product grid
+
+### User Operations
+
+- User authentication
+- Session management with Redis
+- Profile management
+- Shopping cart functionality
+
+### Payment Processing
+
+- Dedicated payment microservice
+- Secure payment handling
+- Payment status tracking
+- Event-driven payment notifications
+
+### System Integration
+
+- Kafka event streaming
+- Inter-service communication
+- Real-time updates
+- Distributed system architecture
+
+## Getting Started
+
 ### Prerequisites
-Ensure you have the following installed:
+
+- Docker and Docker Compose
 - Node.js
 - MongoDB
-- Kafka (set up locally or via a cloud service)
+- Redis
+- Kafka
 
-### Steps
+### Installation
+
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/your-repo-name.git
-   cd your-repo-name
-2.
-    ```bash
-    docker-compose up -d --build
 
+```bash
+git clone https://github.com/yourusername/e-commerce-microservices.git
+cd e-commerce-microservices
+```
 
-### Screens
-![home1](https://github.com/user-attachments/assets/0f06db8c-ffdb-4b8f-8f72-e10b6a6766ac)
-![productdete](https://github.com/user-attachments/assets/eed546f6-5faf-41e9-b1f0-bf71f84588cd)
-![homes](https://github.com/user-attachments/assets/8c894833-cd79-4088-b1be-8ff3b7952d09)
-![prolist](https://github.com/user-attachments/assets/7a5c4869-08d8-4147-b65f-212189d0e83f)
-![footer](https://github.com/user-attachments/assets/530496bc-79e5-42a7-92c5-d991f41dcd7d)
+2. Create necessary .env files:
+   For root directory (.env):
 
-# MongoDB configuration
-| Variable                     | Description                                | Example Value                                                                                           |
-|------------------------------|--------------------------------------------|---------------------------------------------------------------------------------------------------------|
-| `PORT`                       | The port the server will run on            | `4000`                                                                                                  |
-| `CONNECTION_STRING`          | MongoDB connection string                 | `"mongodb+srv://<username>:<password>@newmind.pv5co.mongodb.net/eShopDataBase?retryWrites=true&w=majority&appName=newmind"` |
-| `cloudinary_cloud_name`      | Your Cloudinary cloud name                | `"eShopimg"`                                                                                           |
-| `cloudinary_api_key`         | Your Cloudinary API key                   | `"265588333525137"`                                                                                     |
-| `cloudinary_api_secret`      | Your Cloudinary API secret                | `"Rhf2txLSJsJkaL3dLJiXHvPmkWI"`                                                                         |
-| `JSON_WEB_TOKEN_SECRET_KEY`  | Secret key for JWT generation and verification | `"kalma9378"`                                                                                         |
+```bash
+MONGODB_URI=your_mongodb_connection_string
+REDIS_URL=redis://redis:6379
+```
+
+For server/.env:
+
+```bash
+ORT=4000
+CONNECTION_STRING=your_mongodb_connection_string
+REDIS_URL=redis://redis:6379
+KAFKA_BROKERS=kafka:29092
+JSON_WEB_TOKEN_SECRET_KEY=your_jwt_secret
+```
+
+For payment-service/.env:
+
+```bash
+PORT=3001
+CONNECTION_STRING=your_mongodb_connection_string
+KAFKA_BROKERS=kafka:29092
+```
+
+3. Start the services:
+
+```bash
+docker-compose up -d --build
+```
+
+4. Rebuild specific service:
+
+```bash
+docker-compose up -d --build client
+```
+
+5. Stop services:
+
+```bash
+docker-compose down
+```
