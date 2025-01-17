@@ -130,3 +130,21 @@ docker-compose up -d --build client
 ```bash
 docker-compose down
 ```
+### Screens
+![home1](https://github.com/user-attachments/assets/0f06db8c-ffdb-4b8f-8f72-e10b6a6766ac)
+![productdete](https://github.com/user-attachments/assets/eed546f6-5faf-41e9-b1f0-bf71f84588cd)
+![Image](https://github.com/user-attachments/assets/a7c46c4a-7cd5-4e2a-a00b-fefe0f9dc6aa)
+![homes](https://github.com/user-attachments/assets/8c894833-cd79-4088-b1be-8ff3b7952d09)
+![prolist](https://github.com/user-attachments/assets/7a5c4869-08d8-4147-b65f-212189d0e83f)
+![Image](https://github.com/user-attachments/assets/408a056b-3985-4088-9f60-5dd9ffbf6b0b)
+![footer](https://github.com/user-attachments/assets/530496bc-79e5-42a7-92c5-d991f41dcd7d)
+![Image](https://github.com/user-attachments/assets/8eef1fdf-7a78-487c-91fa-4e894c47ba07)
+# MongoDB configuration
+| Variable                     | Description                                | Example Value                                                                                           |
+|------------------------------|--------------------------------------------|---------------------------------------------------------------------------------------------------------|
+| `PORT`                       | The port the server will run on            | `4000`                                                                                                  |
+| `CONNECTION_STRING`          | MongoDB connection string                 | `"mongodb+srv://<username>:<password>@newmind.pv5co.mongodb.net/eShopDataBase?retryWrites=true&w=majority&appName=newmind"` |
+| `cloudinary_cloud_name`      | Your Cloudinary cloud name                | `"eShopimg"`                                                                                           |
+| `cloudinary_api_key`         | Your Cloudinary API key                   | `"265588333525137"`                                                                                     |
+| `cloudinary_api_secret`      | Your Cloudinary API secret                | `"Rhf2txLSJsJkaL3dLJiXHvPmkWI"`                                                                         |
+| `JSON_WEB_TOKEN_SECRET_KEY`  | Secret key for JWT generation and verification | `"kalma9378"`                                                                                         |
